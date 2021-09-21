@@ -46,9 +46,9 @@ class CarServiceTest {
         when(carAvailabilityService.processStock(any(), any())).thenReturn(carAvailabilityRestConnector);
         when(carAvailabilityRestConnector.available(any(), any())).thenReturn(true);
 
-        CarService sut = new CarService(carRepository, carAvailabilityService);
+        CarService carService = new CarService(carRepository, carAvailabilityService);
 
-        final JsonFullCarMessage result = sut.createCarVerifyAvailability(carCommand);
+        final JsonFullCarMessage result = carService.createCarVerifyAvailability(carCommand);
 
         verify(carAvailabilityService).processStock(eq(carCommand.getModel()), eq(carCommand.getColor()));
         verify(carAvailabilityRestConnector).available(eq(carCommand.getModel()), eq(carCommand.getColor()));
@@ -72,9 +72,9 @@ class CarServiceTest {
         when(carAvailabilityService.processStock(any(), any())).thenReturn(carAvailabilityRestConnector);
         when(carAvailabilityRestConnector.available(any(), any())).thenReturn(false);
 
-        CarService sut = new CarService(carRepository, carAvailabilityService);
+        CarService carService = new CarService(carRepository, carAvailabilityService);
 
-        final JsonFullCarMessage result = sut.createCarVerifyAvailability(carCommand);
+        final JsonFullCarMessage result = carService.createCarVerifyAvailability(carCommand);
 
         verify(carAvailabilityService).processStock(eq(carCommand.getModel()), eq(carCommand.getColor()));
         verify(carAvailabilityRestConnector).available(eq(carCommand.getModel()), eq(carCommand.getColor()));
