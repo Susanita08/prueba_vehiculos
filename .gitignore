@@ -1,0 +1,25 @@
+PruebaTecnica-SolicitudVehiculo.md
+!**/src/main/**/build/
+!**/src/test/**/build/
+.DS_Store
+
+# Directorio de salida de Maven.
+target/
+
+build/
+developmentEnviroment/
+/.settings/
+**/bin/**
+**/out/**
+/.classpath
+/.project
+**/.idea/**
+**/*.iml
+**/*.class
+**/target/**
+**/*.jar
+/.vscode/settings.json
+**/.metadata/**
+*.log
+**/.settings/**
+**/.settings
