@@ -38,9 +38,9 @@ public class CarAvailabilityServiceTest {
     }
 
     public static Stream<Arguments> carAvailabilityArgumentsWithStock() {
-        return Stream.of(Arguments.of(ColorPickerRestConnector.FIAT.getModel(), ColorPickerRestConnector.FIAT.getColor()),
-                Arguments.of(ColorPickerRestConnector.MERCEDES.getModel(), ColorPickerRestConnector.MERCEDES.getColor()),
-                Arguments.of(ColorPickerRestConnector.PEUGEOT.getModel(), ColorPickerRestConnector.PEUGEOT.getColor()));
+        return Stream.of(Arguments.of("FIAT", "YELLOW"),
+                Arguments.of("MERCEDES", "GREY"),
+                Arguments.of("PEUGEOT", "BLUE"));
     }
 
     public static Stream<Arguments> carAvailabilityArgumentsWithOutStock() {

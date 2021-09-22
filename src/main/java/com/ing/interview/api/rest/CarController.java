@@ -1,7 +1,7 @@
 package com.ing.interview.api.rest;
 
 import com.ing.interview.domain.dto.Car;
-import com.ing.interview.objects.ApplicationMessage;
+import com.ing.interview.enums.ApplicationMessage;
 import com.ing.interview.objects.CarCommand;
 import com.ing.interview.domain.service.CarService;
 import com.ing.interview.objects.JsonFullCarMessage;

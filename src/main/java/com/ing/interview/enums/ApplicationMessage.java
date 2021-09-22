@@ -1,4 +1,4 @@
-package com.ing.interview.objects;
+package com.ing.interview.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

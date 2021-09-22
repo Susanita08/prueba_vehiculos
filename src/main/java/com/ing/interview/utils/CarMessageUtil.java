@@ -2,13 +2,12 @@ package com.ing.interview.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ing.interview.objects.ApplicationMessage;
+import com.ing.interview.enums.ApplicationMessage;
 import com.ing.interview.objects.JsonFullCarMessage;
 import com.ing.interview.objects.JsonFullCarMessage.Response;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import springfox.documentation.spring.web.json.Json;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;

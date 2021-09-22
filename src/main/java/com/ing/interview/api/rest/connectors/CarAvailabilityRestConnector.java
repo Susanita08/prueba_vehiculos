@@ -1,8 +1,13 @@
 package com.ing.interview.api.rest.connectors;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter
+@Setter
 public class CarAvailabilityRestConnector {
 
     private static final Set<String> STOCK= new HashSet<>();
