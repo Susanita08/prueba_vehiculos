@@ -6,7 +6,7 @@ import static org.mockito.Mockito.*;
 import com.ing.interview.api.rest.connectors.CarAvailabilityRestConnector;
 import com.ing.interview.api.rest.subordinated.webservice.CarAvailabilityService;
 import com.ing.interview.domain.dto.Car;
-import com.ing.interview.objects.ApplicationMessage;
+import com.ing.interview.enums.ApplicationMessage;
 import com.ing.interview.objects.CarCommand;
 import com.ing.interview.domain.repository.CarRepository;
 import com.ing.interview.objects.JsonFullCarMessage;
@@ -39,19 +39,19 @@ class CarServiceTest {
                 .model("PEUGEOT")
                 .build();
 
-        CarAvailabilityRestConnector carAvailabilityRestConnector= mock(CarAvailabilityRestConnector.class);
+        CarAvailabilityRestConnector carAvailabilityRestConnector = new CarAvailabilityRestConnector();
+        boolean available = carAvailabilityRestConnector.available(carCommand.getColor(), carCommand.getModel());
+
         CarRepository carRepository = mock(CarRepository.class);
         CarAvailabilityService carAvailabilityService= mock(CarAvailabilityService.class);
 
         when(carAvailabilityService.processStock(any(), any())).thenReturn(carAvailabilityRestConnector);
-        when(carAvailabilityRestConnector.available(any(), any())).thenReturn(true);
 
         CarService carService = new CarService(carRepository, carAvailabilityService);
 
         final JsonFullCarMessage result = carService.createCarVerifyAvailability(carCommand);
 
         verify(carAvailabilityService).processStock(eq(carCommand.getModel()), eq(carCommand.getColor()));
-        verify(carAvailabilityRestConnector).available(eq(carCommand.getModel()), eq(carCommand.getColor()));
 
         assertEquals("BLUE", result.getMessage().getCarCommand().getColor());
         assertEquals("PEUGEOT", result.getMessage().getCarCommand().getModel());

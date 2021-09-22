@@ -3,9 +3,7 @@ package com.ing.interview.objects;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ing.interview.api.rest.connectors.ColorPickerRestConnector;
-import com.ing.interview.domain.dto.Car;
 import com.ing.interview.utils.CarMessageUtil;
-import com.ing.interview.utils.validators.EnumSetValue;
 import lombok.*;
 import org.springframework.http.HttpEntity;
 
@@ -80,7 +78,6 @@ public class JsonFullCarMessage implements Serializable {
         private CarCommand carCommand;
         private OrderStatus orderStatus;
 
-        @EnumSetValue(enumClass = ColorPickerRestConnector.class, exclude = { "COLOR_ERRO" })
         private ColorPickerRestConnector colorPickerRestConnector;
     }
 }
