@@ -32,7 +32,7 @@ public class CarController {
     private final static Map<String, HttpStatus> STATUS_MAP = new HashMap<>();
 
     static {
-        STATUS_MAP.put(ApplicationMessage.BAD_FORMAT.getStrCode(), HttpStatus.BAD_REQUEST);
+        STATUS_MAP.put(ApplicationMessage.UNAVAILABLE.getStrCode(), HttpStatus.BAD_REQUEST);
         STATUS_MAP.put(ApplicationMessage.UNEXPECTED.getStrCode(), HttpStatus.INTERNAL_SERVER_ERROR);
         STATUS_MAP.put(ApplicationMessage.CREATED.getStrCode(), HttpStatus.CREATED);
     }
@@ -49,12 +49,12 @@ public class CarController {
         return ResponseEntity.status(HttpStatus.CREATED).body(carService.create(carCommand));
     }
 
-    @ApiOperation(value = "Create new car in the system, called to stock service")
-    @ApiResponses( {@ApiResponse(code = 201, message = "Create new resource of a car called to stock service.")
+    @ApiOperation(value = "Create new car in the system, called to stock service and configured default color")
+    @ApiResponses( {@ApiResponse(code = 201, message = "Create new resource of a car called to stock service and configured default color.")
     })
-    @PostMapping(path = PATH_SEPARATOR + CREATE_CAR_WITH_STOCK, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<JsonFullCarMessage> createCarVerifyStock(@RequestBody CarCommand carCommand) {
-        JsonFullCarMessage jsonFullCarMessage=carService.createCarVerifyAvailability(carCommand);
+    @PostMapping(path = PATH_SEPARATOR + CREATE_CAR_EXTENDED, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<JsonFullCarMessage> createCarExtended(@RequestBody CarCommand carCommand) {
+        JsonFullCarMessage jsonFullCarMessage=carService.createCarExtended(carCommand);
         return ResponseEntity.status(getHttpStatusFromResponseCode(jsonFullCarMessage.getResponse().getStrCode())).body(jsonFullCarMessage);
     }
 

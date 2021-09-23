@@ -37,19 +37,19 @@ class CarControllerTest {
     }
 
     @Test
-    void givenCarOnlyIfExists_ThenCreateThenReturnIsCreated() throws Exception {
+    void givenCarOnlyIfExistsAndFindColor_ThenCreateThenReturnIsCreated() throws Exception {
         CarCommand carCommand = new CarCommand(0, "BLACK", "MERCEDES");
-        JsonFullCarMessage jsonFullCarMessageExpected = JsonFullCarMessageMother.getMessageCarAvailableResponse(carCommand);
+        JsonFullCarMessage jsonFullCarMessageExpected = JsonFullCarMessageMother.getMessageCarAvailableResponse(carCommand, 0L);
 
         CarAvailabilityRestConnector carAvailabilityRestConnector= new CarAvailabilityRestConnector();
 
-        when(carService.createCarVerifyAvailability(eq(carCommand))).thenReturn(jsonFullCarMessageExpected);
+        when(carService.createCarExtended(eq(carCommand))).thenReturn(jsonFullCarMessageExpected);
 
         CarController carController = new CarController(carService);
 
-        ResponseEntity<JsonFullCarMessage> jsonOutput = carController.createCarVerifyStock(carCommand);
+        ResponseEntity<JsonFullCarMessage> jsonOutput = carController.createCarExtended(carCommand);
 
-       verify(carService).createCarVerifyAvailability(eq(carCommand));
+        verify(carService).createCarExtended(eq(carCommand));
 
         assertEquals(ApplicationMessage.CREATED.getCode(), jsonOutput.getBody().getResponse().getCode());
         assertEquals(ApplicationMessage.CREATED.getMessage(), jsonOutput.getBody().getResponse().getMessage());

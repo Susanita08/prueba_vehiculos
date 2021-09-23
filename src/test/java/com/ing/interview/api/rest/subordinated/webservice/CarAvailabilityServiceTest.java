@@ -3,7 +3,6 @@ package com.ing.interview.api.rest.subordinated.webservice;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ing.interview.api.rest.connectors.CarAvailabilityRestConnector;
-import com.ing.interview.api.rest.connectors.ColorPickerRestConnector;
 import com.ing.interview.api.rest.subordinated.webservice.configuration.CarAvailabilityServiceConfiguration;
 import com.ing.interview.objects.CarCommand;
 import org.junit.jupiter.api.BeforeAll;
@@ -34,7 +33,7 @@ public class CarAvailabilityServiceTest {
     @BeforeAll
     static void setUp() throws Exception {
         objectMapper = new ObjectMapper();
-        host = "localhost:8102/stockService/carWithStock";
+        host = "localhost:8102/stockService";
     }
 
     public static Stream<Arguments> carAvailabilityArgumentsWithStock() {
