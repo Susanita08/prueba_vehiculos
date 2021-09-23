@@ -20,8 +20,8 @@ public class CarAvailabilityService {
         this.stockMessageServiceConfiguration = stockMessageServiceConfiguration;
     }
 
-    public CarAvailabilityRestConnector processStock(String model, String color){
-        CarCommand carCommand = CarCommand.builder().model(model.toUpperCase()).color(color.toUpperCase()).build();
+    public CarAvailabilityRestConnector processStock(Integer age, String model, String color){
+        CarCommand carCommand = CarCommand.builder().age(age).model(model.toUpperCase()).color(color.toUpperCase()).build();
         return webClient.post().uri(stockMessageServiceConfiguration.getUrl()).body(BodyInserters.fromValue(carCommand)).retrieve()
                 .bodyToMono(CarAvailabilityRestConnector.class).block();
     }

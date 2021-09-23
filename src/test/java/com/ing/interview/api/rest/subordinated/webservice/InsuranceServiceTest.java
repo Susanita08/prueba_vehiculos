@@ -2,12 +2,10 @@ package com.ing.interview.api.rest.subordinated.webservice;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ing.interview.api.rest.connectors.CarAvailabilityRestConnector;
 import com.ing.interview.api.rest.connectors.ColorPickerRestConnector;
-import com.ing.interview.api.rest.subordinated.webservice.configuration.CarAvailabilityServiceConfiguration;
-import com.ing.interview.api.rest.subordinated.webservice.configuration.ColorPickerServiceConfiguration;
+import com.ing.interview.api.rest.connectors.InsuranceRestConnector;
+import com.ing.interview.api.rest.subordinated.webservice.configuration.InsuranceServiceConfiguration;
 import com.ing.interview.objects.CarCommand;
-import javafx.scene.control.ColorPicker;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,11 +23,11 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-
 @ExtendWith(MockitoExtension.class)
-class ColorPickerServiceTest {
+class InsuranceServiceTest {
+
     @Mock
-    ColorPickerServiceConfiguration colorPickerServiceConfiguration;
+    InsuranceServiceConfiguration insuranceServiceConfiguration;
     private static ObjectMapper objectMapper;
     private static String host;
     private WebClient webClientMock;
@@ -37,24 +35,22 @@ class ColorPickerServiceTest {
     @BeforeAll
     static void setUp() throws Exception {
         objectMapper = new ObjectMapper();
-        host = "localhost:8104/colorPickerService";
+        host = "localhost:8106/insuranceService";
     }
 
-    public static Stream<Arguments> colorPickerArguments() {
-        return Stream.of(Arguments.of("FIAT"),
-                Arguments.of("MERCEDES"),
-                Arguments.of("PEUGEOT"));
+    public static Stream<Arguments> insuranceArguments() {
+        return Stream.of(Arguments.of("FIAT", 20),
+                Arguments.of("MERCEDES", 50),
+                Arguments.of("PEUGEOT", 18));
     }
 
     @ParameterizedTest
-    @MethodSource("colorPickerArguments")
-    void whenProcessColorPickerDefault(String model) throws JsonProcessingException {
-        Integer age=18;
-        ColorPickerRestConnector colorPickerRestConnectorExpected = new ColorPickerRestConnector();
+    @MethodSource("insuranceArguments")
+    void whenProcessInsuranceAgeAllowed(String model, Integer allowedAge) throws JsonProcessingException {
+        InsuranceRestConnector insuranceRestConnectorExpected = new InsuranceRestConnector();
+        when(insuranceServiceConfiguration.getUrl()).thenReturn(host);
 
-        when(colorPickerServiceConfiguration.getUrl()).thenReturn(host);
-
-        CarCommand carCommandBody = new CarCommand(age,null, model);
+        CarCommand carCommandBody = new CarCommand(allowedAge,null, model);
         String READER_JSON=objectMapper.writeValueAsString(carCommandBody);
 
         webClientMock= WebClient.builder().baseUrl(host)
@@ -64,22 +60,20 @@ class ColorPickerServiceTest {
                         .build()))
                 .build();
 
-        final ColorPickerService tested = new ColorPickerService(webClientMock, colorPickerServiceConfiguration);
+        final InsuranceService tested = new InsuranceService(webClientMock, insuranceServiceConfiguration);
 
-        ColorPickerRestConnector colorPickerRestConnectorOutput = tested.getColorDefault(age, model);
+        InsuranceRestConnector insuranceRestConnectorOutput = tested.getAllowedByModel(allowedAge, model);
 
-        assertEquals(colorPickerRestConnectorExpected.pickColor(model), colorPickerRestConnectorOutput.pickColor(model));
+        assertEquals(insuranceRestConnectorExpected.isEligible(allowedAge, model), insuranceRestConnectorOutput.isEligible(allowedAge, model));
 
     }
 
     @ParameterizedTest
-    @MethodSource("colorPickerArguments")
-    void whenProcessColorPickerDefaultWithErrors(String model) throws JsonProcessingException {
-        ColorPickerRestConnector colorPickerRestConnectorExpected = new ColorPickerRestConnector();
-        host += "/Timeout";
-        Integer age=18;
+    @MethodSource("insuranceArguments")
+    void whenProcessInsuranceAgeAllowedWithErrorsTimeOut(String model, Integer allowedAge) throws JsonProcessingException {
+        InsuranceRestConnector insuranceRestConnectorExpected = new InsuranceRestConnector();
 
-        CarCommand carCommandBody = new CarCommand(18,null, model);
+        CarCommand carCommandBody = new CarCommand(allowedAge,null, model);
         String READER_JSON=objectMapper.writeValueAsString(carCommandBody);
 
         webClientMock= WebClient.builder().baseUrl(host)
@@ -89,8 +83,8 @@ class ColorPickerServiceTest {
                         .build()))
                 .build();
 
-        final ColorPickerService tested = new ColorPickerService(webClientMock, colorPickerServiceConfiguration);
+        final InsuranceService tested = new InsuranceService(webClientMock, insuranceServiceConfiguration);
 
-        assertThrows(RuntimeException.class, ()->tested.processTimeOut(age, model));
+        assertThrows(RuntimeException.class, ()->tested.processTimeOut(allowedAge, model));
     }
 }

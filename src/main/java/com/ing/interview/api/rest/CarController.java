@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,8 +33,8 @@ public class CarController {
     private final static Map<String, HttpStatus> STATUS_MAP = new HashMap<>();
 
     static {
-        STATUS_MAP.put(ApplicationMessage.UNAVAILABLE.getStrCode(), HttpStatus.BAD_REQUEST);
-        STATUS_MAP.put(ApplicationMessage.UNEXPECTED.getStrCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        STATUS_MAP.put(ApplicationMessage.UNAVAILABLE.getStrCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        STATUS_MAP.put(ApplicationMessage.UNEXPECTED.getStrCode(), HttpStatus.BAD_REQUEST);
         STATUS_MAP.put(ApplicationMessage.CREATED.getStrCode(), HttpStatus.CREATED);
     }
 
@@ -53,7 +54,7 @@ public class CarController {
     @ApiResponses( {@ApiResponse(code = 201, message = "Create new resource of a car called to stock service and configured default color.")
     })
     @PostMapping(path = PATH_SEPARATOR + CREATE_CAR_EXTENDED, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<JsonFullCarMessage> createCarExtended(@RequestBody CarCommand carCommand) {
+    public ResponseEntity<JsonFullCarMessage> createCarExtended(@Valid @RequestBody CarCommand carCommand) {
         JsonFullCarMessage jsonFullCarMessage=carService.createCarExtended(carCommand);
         return ResponseEntity.status(getHttpStatusFromResponseCode(jsonFullCarMessage.getResponse().getStrCode())).body(jsonFullCarMessage);
     }
