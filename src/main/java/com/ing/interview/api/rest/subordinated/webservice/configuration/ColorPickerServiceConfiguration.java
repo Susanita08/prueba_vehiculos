@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import static com.ing.interview.utils.ConstantsUtils.*;
@@ -14,17 +13,17 @@ import static com.ing.interview.utils.ConstantsUtils.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CarAvailabilityServiceConfiguration {
+public class ColorPickerServiceConfiguration {
 
-    @Value ("${ing.service.car.availability.host}")
+    @Value ("${ing.service.color.picker.host}")
     private String serviceHost;
 
-    private String serviceName= ING_STOCK_SERVICE;
+    private String serviceName= ING_COLOR_PICKER_SERVICE;
 
     public String getUrl(){ return this.getServiceHost() + PATH_SEPARATOR + this.getServiceName();}
 
     public String getUrlTimeout() {
-        return this.getUrl() + PATH_SEPARATOR + ING_STOCK_SERVICE_PATH_TIMEOUT;
+        return this.getUrl() + PATH_SEPARATOR + ING_COLOR_PICKER_SERVICE_PATH_TIMEOUT;
     }
 
 }

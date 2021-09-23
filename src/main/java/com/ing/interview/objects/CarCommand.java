@@ -1,12 +1,14 @@
 package com.ing.interview.objects;
 
-import javax.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NonNull;
 
-import lombok.*;
+import javax.validation.constraints.NotBlank;
 
 @Builder
 @Getter
-@Setter
 @AllArgsConstructor
 public class CarCommand {
     @NonNull

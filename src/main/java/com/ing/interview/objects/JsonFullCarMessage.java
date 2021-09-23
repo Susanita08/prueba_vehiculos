@@ -3,6 +3,7 @@ package com.ing.interview.objects;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ing.interview.api.rest.connectors.ColorPickerRestConnector;
+import com.ing.interview.domain.dto.Car;
 import com.ing.interview.utils.CarMessageUtil;
 import lombok.*;
 import org.springframework.http.HttpEntity;
@@ -74,8 +75,8 @@ public class JsonFullCarMessage implements Serializable {
     @Builder
     public static class Message implements Serializable {
         private static final long serialVersionUID = 5220869892943424924L;
-
-        private CarCommand carCommand;
+        private Car car;
+        //private CarCommand carCommand;
         private OrderStatus orderStatus;
 
         private ColorPickerRestConnector colorPickerRestConnector;

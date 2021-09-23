@@ -12,7 +12,6 @@ import javax.persistence.SequenceGenerator;
 import lombok.*;
 
 @Builder
-@Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
