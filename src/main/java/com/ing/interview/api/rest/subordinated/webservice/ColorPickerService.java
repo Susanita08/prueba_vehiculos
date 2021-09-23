@@ -1,8 +1,6 @@
 package com.ing.interview.api.rest.subordinated.webservice;
 
-import com.ing.interview.api.rest.connectors.CarAvailabilityRestConnector;
 import com.ing.interview.api.rest.connectors.ColorPickerRestConnector;
-import com.ing.interview.api.rest.subordinated.webservice.configuration.CarAvailabilityServiceConfiguration;
 import com.ing.interview.api.rest.subordinated.webservice.configuration.ColorPickerServiceConfiguration;
 import com.ing.interview.objects.CarCommand;
 import org.springframework.beans.factory.annotation.Autowired;

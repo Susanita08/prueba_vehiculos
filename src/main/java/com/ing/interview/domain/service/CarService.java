@@ -45,19 +45,6 @@ public class CarService {
         return car;
     }
 
-   /* public JsonFullCarMessage createCarVerifyAvailability(CarCommand carCommand) {
-        CarAvailabilityRestConnector carAvailability = carAvailabilityService.processStock(carCommand.getModel(), carCommand.getColor());
-        Message message = null;
-        Response response;
-        if (carAvailability.available(carCommand.getModel(), carCommand.getColor())) {
-            message = JsonFullCarMessage.Message.builder().car(create(carCommand)).build();
-            response = JsonFullCarMessage.Response.builder().code(ApplicationMessage.CREATED.getCode()).message(ApplicationMessage.CREATED.getMessage()).strCode(ApplicationMessage.CREATED.getStrCode()).sourceService("CarAvailabilityService").build();
-            return JsonFullCarMessage.builder().message(message).response(response).build();
-        }
-        response = JsonFullCarMessage.Response.builder().code(ApplicationMessage.UNAVAILABLE.getCode()).message(ApplicationMessage.UNAVAILABLE.getMessage()).strCode(ApplicationMessage.UNAVAILABLE.getStrCode()).build();
-        return JsonFullCarMessage.builder().response(response).build();
-    }*/
-
     public JsonFullCarMessage createCarExtended(CarCommand carCommand) {
         if(isNull(carCommand) || isNull(getColorDefault(carCommand))){
             return getBadResponse(false);
@@ -67,7 +54,6 @@ public class CarService {
         if (carAvailability.available(carCommand.getModel(), color)) {
             CarCommand carCommandModificate= CarCommand.builder().model(carCommand.getModel()).color(color).build();
             Message message = JsonFullCarMessage.Message.builder().car(create(carCommandModificate)).build();
-           // Message message = JsonFullCarMessage.Message.builder().carCommand(carCommandModificate).build();
             Response response = JsonFullCarMessage.Response.builder().code(ApplicationMessage.CREATED.getCode()).message(ApplicationMessage.CREATED.getMessage()).strCode(ApplicationMessage.CREATED.getStrCode()).sourceService("CarAvailabilityService").build();
             return JsonFullCarMessage.builder().message(message).response(response).build();
         }
