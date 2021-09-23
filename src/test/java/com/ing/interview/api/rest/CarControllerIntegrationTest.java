@@ -6,7 +6,6 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.method;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -14,24 +13,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.ing.interview.InterviewApplication;
-import com.ing.interview.api.rest.connectors.CarAvailabilityRestConnector;
-import com.ing.interview.api.rest.connectors.ColorPickerRestConnector;
 import com.ing.interview.api.rest.subordinated.webservice.CarAvailabilityService;
 import com.ing.interview.api.rest.subordinated.webservice.ColorPickerService;
 import com.ing.interview.api.rest.subordinated.webservice.configuration.CarAvailabilityServiceConfiguration;
 import com.ing.interview.domain.repository.CarRepository;
-import com.ing.interview.domain.service.CarService;
-import com.ing.interview.enums.ApplicationMessage;
-import com.ing.interview.objects.CarCommand;
-import com.ing.interview.objects.JsonFullCarMessage;
-import com.ing.interview.objects.mother.JsonFullCarMessageMother;
 import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -41,11 +32,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import wiremock.com.fasterxml.jackson.databind.ObjectMapper;
 import wiremock.org.eclipse.jetty.server.Server;
-
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
-import static reactor.core.publisher.Mono.when;
-
-import java.util.Objects;
 
 @AutoConfigureMockMvc
 @AutoConfigureWebTestClient(timeout = "100000")

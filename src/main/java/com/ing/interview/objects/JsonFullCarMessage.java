@@ -76,7 +76,6 @@ public class JsonFullCarMessage implements Serializable {
     public static class Message implements Serializable {
         private static final long serialVersionUID = 5220869892943424924L;
         private Car car;
-        //private CarCommand carCommand;
         private OrderStatus orderStatus;
 
         private ColorPickerRestConnector colorPickerRestConnector;
