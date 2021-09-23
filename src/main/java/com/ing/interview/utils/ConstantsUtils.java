@@ -21,4 +21,8 @@ public class ConstantsUtils {
     /*Definitions color picker service*/
     public static final String ING_COLOR_PICKER_SERVICE = "colorPickerService";
     public static final String ING_COLOR_PICKER_SERVICE_PATH_TIMEOUT = "Timeout";
+
+    /*Definitions insurance service*/
+    public static final String ING_INSURANCE_SERVICE = "insuranceService";
+    public static final String ING_INSURANCE_SERVICE_PATH_TIMEOUT = "Timeout";
 }

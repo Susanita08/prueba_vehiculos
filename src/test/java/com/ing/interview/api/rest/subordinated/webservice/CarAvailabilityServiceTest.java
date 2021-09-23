@@ -50,7 +50,7 @@ public class CarAvailabilityServiceTest {
     @ParameterizedTest
     @MethodSource("carAvailabilityArgumentsWithStock")
     void whenProcessCarIfStockExistThenReturnAvailability(String model, String color) throws JsonProcessingException {
-
+        Integer age=18;
         CarAvailabilityRestConnector carAvailabilityRestConnectorExpected = new CarAvailabilityRestConnector();
 
         StringBuilder builderCar= new StringBuilder();
@@ -58,7 +58,7 @@ public class CarAvailabilityServiceTest {
 
         when(carAvailabilityServiceConfiguration.getUrl()).thenReturn(host);
 
-        CarCommand carCommandBody = new CarCommand(0,color, model);
+        CarCommand carCommandBody = new CarCommand(age,color, model);
         String READER_JSON=objectMapper.writeValueAsString(carCommandBody);
 
         webClientMock= WebClient.builder().baseUrl(host)
@@ -70,7 +70,7 @@ public class CarAvailabilityServiceTest {
 
         final CarAvailabilityService tested = new CarAvailabilityService(webClientMock, carAvailabilityServiceConfiguration);
 
-        CarAvailabilityRestConnector carAvailabilityRestConnectorOutput = tested.processStock(model, color);
+        CarAvailabilityRestConnector carAvailabilityRestConnectorOutput = tested.processStock(age, model, color);
 
         assertEquals(carAvailabilityRestConnectorExpected.available(color,model), carAvailabilityRestConnectorOutput.available(color, model));
 
@@ -79,13 +79,13 @@ public class CarAvailabilityServiceTest {
     @ParameterizedTest
     @MethodSource("carAvailabilityArgumentsWithOutStock")
     void whenProcessCarIfStockNotExistThenReturnFalse(String model, String color) throws JsonProcessingException {
-
+        Integer age = 18;
         StringBuilder builderCar= new StringBuilder();
         builderCar.append(model.toUpperCase()).append(":").append(color.toUpperCase());
 
         when(carAvailabilityServiceConfiguration.getUrl()).thenReturn(host);
 
-        CarCommand carCommandBody = new CarCommand(0,color, model);
+        CarCommand carCommandBody = new CarCommand(age,color, model);
         String READER_JSON=objectMapper.writeValueAsString(carCommandBody);
 
         webClientMock= WebClient.builder().baseUrl(host)
@@ -97,7 +97,7 @@ public class CarAvailabilityServiceTest {
 
         final CarAvailabilityService tested = new CarAvailabilityService(webClientMock, carAvailabilityServiceConfiguration);
 
-        CarAvailabilityRestConnector carAvailabilityRestConnectorOutput = tested.processStock(model, color);
+        CarAvailabilityRestConnector carAvailabilityRestConnectorOutput = tested.processStock(age, model, color);
 
         assertFalse(carAvailabilityRestConnectorOutput.available(color, model));
 
@@ -112,9 +112,7 @@ public class CarAvailabilityServiceTest {
         StringBuilder builderCar= new StringBuilder();
         builderCar.append(model.toUpperCase()).append(":").append(color.toUpperCase());
 
-        when(carAvailabilityServiceConfiguration.getUrlTimeout()).thenReturn(host);
-
-        CarCommand carCommandBody = new CarCommand(0,color, model);
+        CarCommand carCommandBody = new CarCommand(18,color, model);
         String READER_JSON=objectMapper.writeValueAsString(carCommandBody);
 
         webClientMock= WebClient.builder().baseUrl(host)

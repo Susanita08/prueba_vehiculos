@@ -20,14 +20,14 @@ public class ColorPickerService {
         this.colorPickerServiceConfiguration = colorPickerServiceConfiguration;
     }
 
-    public ColorPickerRestConnector getColorDefault(String model){
-        CarCommand carCommand = CarCommand.builder().model(model.toUpperCase()).build();
+    public ColorPickerRestConnector getColorDefault(Integer age, String model){
+        CarCommand carCommand = CarCommand.builder().age(age).model(model.toUpperCase()).build();
         return webClient.post().uri(colorPickerServiceConfiguration.getUrl()).body(BodyInserters.fromValue(carCommand)).retrieve()
                 .bodyToMono(ColorPickerRestConnector.class).block();
     }
 
-    public ColorPickerRestConnector processTimeOut(String model){
-        CarCommand carCommand = CarCommand.builder().model(model.toUpperCase()).build();
+    public ColorPickerRestConnector processTimeOut(Integer age, String model){
+        CarCommand carCommand = CarCommand.builder().age(age).model(model.toUpperCase()).build();
         return webClient.post().uri(colorPickerServiceConfiguration.getUrlTimeout()).body(BodyInserters.fromValue(carCommand)).retrieve()
                 .bodyToMono(ColorPickerRestConnector.class).block();
     }

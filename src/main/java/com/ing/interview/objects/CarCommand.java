@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 @Builder
@@ -12,7 +14,9 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class CarCommand {
     @NonNull
-    private final int age;
+    @Min(value = 18)
+    @Digits(integer=2, fraction=0)
+    private final Integer age;
 
     private final String color;
 
