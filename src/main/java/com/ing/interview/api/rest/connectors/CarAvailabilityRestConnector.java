@@ -9,7 +9,6 @@ import java.util.Set;
 @Getter
 @Setter
 public class CarAvailabilityRestConnector {
-
     private static final Set<String> STOCK= new HashSet<>();
 
     static{

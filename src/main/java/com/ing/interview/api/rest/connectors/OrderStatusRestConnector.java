@@ -1,6 +1,8 @@
 package com.ing.interview.api.rest.connectors;
 
-import com.ing.interview.objects.OrderStatus;
+
+import com.ing.interview.domain.dto.OrderStatus;
+
 import java.time.LocalDateTime;
 
 public class OrderStatusRestConnector {

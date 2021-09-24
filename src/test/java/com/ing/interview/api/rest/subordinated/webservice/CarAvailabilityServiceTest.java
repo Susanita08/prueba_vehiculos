@@ -62,7 +62,7 @@ public class CarAvailabilityServiceTest {
         String READER_JSON=objectMapper.writeValueAsString(carCommandBody);
 
         webClientMock= WebClient.builder().baseUrl(host)
-                .exchangeFunction(clientRequest -> Mono.just(ClientResponse.create(HttpStatus.CREATED)
+                .exchangeFunction(clientRequest -> Mono.just(ClientResponse.create(HttpStatus.OK)
                         .header("content-type", "application/json")
                         .body(READER_JSON)
                         .build()))

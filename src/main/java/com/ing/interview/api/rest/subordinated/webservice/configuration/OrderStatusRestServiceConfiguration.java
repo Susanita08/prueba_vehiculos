@@ -12,17 +12,17 @@ import static com.ing.interview.utils.ConstantsUtils.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CarAvailabilityServiceConfiguration {
+public class OrderStatusRestServiceConfiguration {
 
-    @Value ("${ing.service.car.availability.host}")
+    @Value ("${ing.service.order.conector.host}")
     private String serviceHost;
 
-    private String serviceName= ING_STOCK_SERVICE;
+    private String serviceName= ING_ORDER_CONECTOR_SERVICE;
 
     public String getUrl(){ return this.getServiceHost() + PATH_SEPARATOR + this.getServiceName();}
 
     public String getUrlTimeout() {
-        return this.getUrl() + PATH_SEPARATOR + ING_STOCK_SERVICE_PATH_TIMEOUT;
+        return this.getUrl() + PATH_SEPARATOR + ING_ORDER_CONECTOR_SERVICE_PATH_TIMEOUT;
     }
 
 }

@@ -13,10 +13,15 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class JsonFullCarMessageMother {
 
-    public static JsonFullCarMessage getMessageCarAvailableResponse(CarCommand carCommand, Long idCar) {
+    public static JsonFullCarMessage getMessageCarAvailableResponse(CarCommand carCommand, Long idCar, boolean created) {
         Message message = Message.builder().car(Car.builder().id(idCar).model(carCommand.getModel()).color(carCommand.getColor()).orderDate(LocalDate.now()).build()).build();
-        Response response = Response.builder().code(ApplicationMessage.CREATED.getCode()).message(ApplicationMessage.CREATED.getMessage()).strCode(ApplicationMessage.CREATED.getStrCode()).sourceService("CarAvailabilityService").build();
+        Response response = created ? Response.builder().code(ApplicationMessage.CREATED.getCode()).message(ApplicationMessage.CREATED.getMessage())
+                .strCode(ApplicationMessage.CREATED.getStrCode()).sourceService("CarAvailabilityService").build()
+                : Response.builder().code(ApplicationMessage.SUCCESS.getCode()).message(ApplicationMessage.SUCCESS.getMessage()).strCode(ApplicationMessage.SUCCESS.getStrCode())
+                .sourceService("CarAvailabilityService").build();
         return JsonFullCarMessage.builder().message(message).response(response).build();
     }
+
+
 
 }

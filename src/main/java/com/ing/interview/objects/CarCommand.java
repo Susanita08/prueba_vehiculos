@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NonNull;
 
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
@@ -15,6 +16,7 @@ import javax.validation.constraints.NotBlank;
 public class CarCommand {
     @NonNull
     @Min(value = 18)
+    @Max(value=80)
     @Digits(integer=2, fraction=0)
     private final Integer age;
 
