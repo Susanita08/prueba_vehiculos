@@ -1,4 +1,4 @@
-package com.ing.interview.utilsTest;
+package com.ing.interview.utils;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

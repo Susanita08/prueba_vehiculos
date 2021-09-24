@@ -1,4 +1,4 @@
-package com.ing.interview.utilsTest;
+package com.ing.interview.utils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

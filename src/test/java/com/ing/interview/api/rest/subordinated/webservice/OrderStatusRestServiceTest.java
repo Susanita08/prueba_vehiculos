@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ing.interview.api.rest.connectors.OrderStatusRestConnector;
 import com.ing.interview.api.rest.subordinated.webservice.configuration.OrderStatusRestServiceConfiguration;
 import com.ing.interview.domain.dto.OrderStatus;
-import com.ing.interview.utilsTest.LocalDateTimeUtil;
+import com.ing.interview.utils.LocalDateTimeUtil;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

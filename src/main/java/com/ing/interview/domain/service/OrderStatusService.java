@@ -8,7 +8,7 @@ import com.ing.interview.domain.repository.CarRepository;
 import com.ing.interview.enums.ApplicationMessage;
 import com.ing.interview.objects.JsonFullCarMessage;
 import com.ing.interview.objects.JsonFullCarMessage.*;
-import com.ing.interview.utilsTest.LocalDateTimeUtil;
+import com.ing.interview.utils.LocalDateTimeUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

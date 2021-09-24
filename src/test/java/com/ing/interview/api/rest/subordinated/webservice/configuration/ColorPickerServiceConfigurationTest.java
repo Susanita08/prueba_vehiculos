@@ -2,7 +2,7 @@ package com.ing.interview.api.rest.subordinated.webservice.configuration;
 
 import org.junit.jupiter.api.Test;
 
-import static com.ing.interview.utilsTest.ConstantsUtils.*;
+import static com.ing.interview.utils.ConstantsUtils.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ColorPickerServiceConfigurationTest {

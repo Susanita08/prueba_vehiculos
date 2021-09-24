@@ -6,7 +6,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import static com.ing.interview.utilsTest.ConstantsUtils.*;
+import static com.ing.interview.utils.ConstantsUtils.*;
 
 @Component
 @Getter

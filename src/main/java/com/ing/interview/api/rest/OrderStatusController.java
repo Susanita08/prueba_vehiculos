@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.ing.interview.utilsTest.ConstantsUtils.*;
+import static com.ing.interview.utils.ConstantsUtils.*;
 import static java.util.Optional.ofNullable;
 
 @RestController

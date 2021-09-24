@@ -8,7 +8,7 @@ import com.ing.interview.domain.dto.Car;
 import com.ing.interview.domain.dto.OrderStatus;
 import com.ing.interview.domain.repository.CarRepository;
 import com.ing.interview.objects.JsonFullCarMessage;
-import com.ing.interview.utilsTest.LocalDateTimeUtil;
+import com.ing.interview.utils.LocalDateTimeUtil;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
