@@ -14,6 +14,7 @@ developmentEnviroment/
 /.classpath
 /.project
 **/.idea/**
+**/.jpb/**
 **/*.iml
 **/*.class
 **/target/**

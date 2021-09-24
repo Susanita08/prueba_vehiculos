@@ -29,13 +29,6 @@ public class CarService {
     private final ColorPickerService colorPickerService;
     private final InsuranceService insuranceService;
 
-    /*@Autowired
-    public CarService(CarRepository carRepository, CarAvailabilityService carAvailabilityService, ColorPickerService colorPickerService) {
-        this.carRepository = carRepository;
-        this.carAvailabilityService = carAvailabilityService;
-        this.colorPickerService = colorPickerService;
-    }*/
-
     public Car create(CarCommand carCommand) {
         final Car car = Car.builder()
                 .color(carCommand.getColor())
@@ -60,20 +53,10 @@ public class CarService {
         if (carAvailability.available(carCommand.getModel(), color)) {
             CarCommand carCommandModificate = CarCommand.builder().age(carCommand.getAge()).model(carCommand.getModel()).color(color).build();
             Message message = JsonFullCarMessage.Message.builder().car(create(carCommandModificate)).build();
-            Response response = JsonFullCarMessage.Response.builder().code(ApplicationMessage.CREATED.getCode()).message(ApplicationMessage.CREATED.getMessage()).strCode(ApplicationMessage.CREATED.getStrCode()).sourceService("CarAvailabilityService").build();
+            Response response = JsonFullCarMessage.Response.builder().code(ApplicationMessage.CREATED.getCode()).message(ApplicationMessage.CREATED.getMessage()).strCode(ApplicationMessage.CREATED.getStrCode()).sourceService("CarService").build();
             return JsonFullCarMessage.builder().message(message).response(response).build();
         }
         return getBadResponse(true);
-    }
-
-    public JsonFullCarMessage getBadResponse(boolean isNotAvailable) {
-        Response response;
-        if (isNotAvailable) {
-            response = JsonFullCarMessage.Response.builder().code(ApplicationMessage.UNAVAILABLE.getCode()).message(ApplicationMessage.UNAVAILABLE.getMessage()).strCode(ApplicationMessage.UNAVAILABLE.getStrCode()).build();
-            return JsonFullCarMessage.builder().response(response).build();
-        }
-        response = JsonFullCarMessage.Response.builder().code(ApplicationMessage.UNEXPECTED.getCode()).message(ApplicationMessage.UNEXPECTED.getMessage()).strCode(ApplicationMessage.UNEXPECTED.getStrCode()).build();
-        return JsonFullCarMessage.builder().response(response).build();
     }
 
     private String getColorDefault(CarCommand carCommand) {
@@ -91,5 +74,14 @@ public class CarService {
         return ofNullable(insuranceService.getAllowedByModel(carCommand.getAge(), carCommand.getModel())).map(insuranceRestConnector -> insuranceRestConnector.isEligible(carCommand.getAge(), carCommand.getModel())).orElse(false);
     }
 
+    public JsonFullCarMessage getBadResponse(boolean isNotAvailable) {
+        Response response;
+        if (isNotAvailable) {
+            response = JsonFullCarMessage.Response.builder().code(ApplicationMessage.UNAVAILABLE.getCode()).message(ApplicationMessage.UNAVAILABLE.getMessage()).strCode(ApplicationMessage.UNAVAILABLE.getStrCode()).build();
+            return JsonFullCarMessage.builder().response(response).build();
+        }
+        response = JsonFullCarMessage.Response.builder().code(ApplicationMessage.UNEXPECTED.getCode()).message(ApplicationMessage.UNEXPECTED.getMessage()).strCode(ApplicationMessage.UNEXPECTED.getStrCode()).build();
+        return JsonFullCarMessage.builder().response(response).build();
+    }
 
 }

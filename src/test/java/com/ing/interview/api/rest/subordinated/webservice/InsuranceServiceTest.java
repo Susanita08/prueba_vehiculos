@@ -46,7 +46,7 @@ class InsuranceServiceTest {
 
     @ParameterizedTest
     @MethodSource("insuranceArguments")
-    void whenProcessInsuranceAgeAllowed(String model, Integer allowedAge) throws JsonProcessingException {
+    void whenProcessInsuranceAgeAllowedWithOutErrors(String model, Integer allowedAge) throws JsonProcessingException {
         InsuranceRestConnector insuranceRestConnectorExpected = new InsuranceRestConnector();
         when(insuranceServiceConfiguration.getUrl()).thenReturn(host);
 
@@ -54,7 +54,7 @@ class InsuranceServiceTest {
         String READER_JSON=objectMapper.writeValueAsString(carCommandBody);
 
         webClientMock= WebClient.builder().baseUrl(host)
-                .exchangeFunction(clientRequest -> Mono.just(ClientResponse.create(HttpStatus.CREATED)
+                .exchangeFunction(clientRequest -> Mono.just(ClientResponse.create(HttpStatus.OK)
                         .header("content-type", "application/json")
                         .body(READER_JSON)
                         .build()))

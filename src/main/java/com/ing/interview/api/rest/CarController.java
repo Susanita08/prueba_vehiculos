@@ -20,7 +20,7 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.ing.interview.utils.ConstantsUtils.*;
+import static com.ing.interview.utilsTest.ConstantsUtils.*;
 import static java.util.Optional.ofNullable;
 
 @RestController
@@ -29,7 +29,6 @@ import static java.util.Optional.ofNullable;
 public class CarController {
     private static final Log log = LogFactory.getLog(CarController.class);
 
-    private final CarService carService;
     private final static Map<String, HttpStatus> STATUS_MAP = new HashMap<>();
 
     static {
@@ -37,6 +36,8 @@ public class CarController {
         STATUS_MAP.put(ApplicationMessage.UNEXPECTED.getStrCode(), HttpStatus.BAD_REQUEST);
         STATUS_MAP.put(ApplicationMessage.CREATED.getStrCode(), HttpStatus.CREATED);
     }
+
+    private final CarService carService;
 
     public CarController(CarService carService) {
         this.carService = carService;
@@ -47,6 +48,7 @@ public class CarController {
     })
     @PostMapping(path = PATH_SEPARATOR + CREATE_CAR, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Car> create(@RequestBody CarCommand carCommand) {
+        log.info("Create car original");
         return ResponseEntity.status(HttpStatus.CREATED).body(carService.create(carCommand));
     }
 
@@ -55,12 +57,13 @@ public class CarController {
     })
     @PostMapping(path = PATH_SEPARATOR + CREATE_CAR_EXTENDED, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<JsonFullCarMessage> createCarExtended(@Valid @RequestBody CarCommand carCommand) {
+        log.info("Create car extended");
         JsonFullCarMessage jsonFullCarMessage=carService.createCarExtended(carCommand);
         return ResponseEntity.status(getHttpStatusFromResponseCode(jsonFullCarMessage.getResponse().getStrCode())).body(jsonFullCarMessage);
     }
 
-
     private HttpStatus getHttpStatusFromResponseCode(String responseCode){
+        log.info("Get HttpStatus of response in CarController: "+responseCode);
         return ofNullable(STATUS_MAP.get(responseCode)).orElse(HttpStatus.OK);
     }
 

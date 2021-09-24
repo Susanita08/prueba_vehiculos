@@ -10,13 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
 import lombok.*;
+import org.springframework.hateoas.RepresentationModel;
 
 @Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Car {
+public class Car extends RepresentationModel<Car> {
 
     @Column(name = "ID", nullable = false)
     @GeneratedValue(generator = "Sequence", strategy = SEQUENCE)
