@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,8 @@ import java.util.Map;
 
 import static com.ing.interview.utils.ConstantsUtils.*;
 import static java.util.Optional.ofNullable;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(PATH_SEPARATOR + CARS + PATH_SEPARATOR + API + PATH_SEPARATOR + API_VERSION)
@@ -43,28 +46,24 @@ public class CarController {
         this.carService = carService;
     }
 
-    @ApiOperation(value = "Create new car in the system")
-    @ApiResponses( {@ApiResponse(code = 201, message = "Create new resource of a car.")
+    @ApiOperation(value = "Create new car in the system, called to stock service and configured default color")
+    @ApiResponses( {
+            @ApiResponse(code = 201, message = "Create new resource of a car called to stock service and configured default color."),
+            @ApiResponse(code = 400, message = "Some microservice did not respond"),
+            @ApiResponse(code = 500, message = "CardAvailabilityService not availability for the model specific")
     })
     @PostMapping(path = PATH_SEPARATOR + CREATE_CAR, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Car> create(@RequestBody CarCommand carCommand) {
-        log.info("Create car original");
-        return ResponseEntity.status(HttpStatus.CREATED).body(carService.create(carCommand));
-    }
-
-    @ApiOperation(value = "Create new car in the system, called to stock service and configured default color")
-    @ApiResponses( {@ApiResponse(code = 201, message = "Create new resource of a car called to stock service and configured default color.")
-    })
-    @PostMapping(path = PATH_SEPARATOR + CREATE_CAR_EXTENDED, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<JsonFullCarMessage> createCarExtended(@Valid @RequestBody CarCommand carCommand) {
+    public ResponseEntity<Car> createCarExtended(@Valid @RequestBody CarCommand carCommand) {
         log.info("Create car extended");
         JsonFullCarMessage jsonFullCarMessage=carService.createCarExtended(carCommand);
-        return ResponseEntity.status(getHttpStatusFromResponseCode(jsonFullCarMessage.getResponse().getStrCode())).body(jsonFullCarMessage);
-    }
+        return ResponseEntity.status(getHttpStatusFromResponseCode(jsonFullCarMessage.getResponse().getStrCode())).body(jsonFullCarMessage.getMessage().getCar());
+       }
 
     private HttpStatus getHttpStatusFromResponseCode(String responseCode){
         log.info("Get HttpStatus of response in CarController: "+responseCode);
         return ofNullable(STATUS_MAP.get(responseCode)).orElse(HttpStatus.OK);
     }
+
+
 
 }

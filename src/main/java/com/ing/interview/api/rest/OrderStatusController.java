@@ -1,6 +1,7 @@
 package com.ing.interview.api.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.ing.interview.domain.dto.Car;
 import com.ing.interview.domain.service.OrderStatusService;
 import com.ing.interview.enums.ApplicationMessage;
 import com.ing.interview.objects.JsonFullCarMessage;
@@ -31,7 +32,7 @@ public class OrderStatusController {
 
     static {
         STATUS_MAP.put(ApplicationMessage.UNEXPECTED.getStrCode(), HttpStatus.BAD_REQUEST);
-        STATUS_MAP.put(ApplicationMessage.CREATED.getStrCode(), HttpStatus.CREATED);
+        STATUS_MAP.put(ApplicationMessage.SUCCESS.getStrCode(), HttpStatus.OK);
     }
 
     private final OrderStatusService orderStatusService;
@@ -43,10 +44,10 @@ public class OrderStatusController {
     @ApiOperation(value = "Find Car by orderStatus in the system")
     @ApiResponses( {@ApiResponse(code = 200, message = "Find Car by orderStatus in the system")})
     @GetMapping(path = PATH_SEPARATOR + FIND_CAR + PATH_SEPARATOR + ID_CAR, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<JsonFullCarMessage> findCarByOrderStatus(@PathVariable Long idCar) throws JsonProcessingException {
+    public ResponseEntity<Car> findCarByOrderStatus(@PathVariable Long idCar) throws JsonProcessingException {
         log.info("Find Car by orderStatus in the system");
         JsonFullCarMessage jsonFullCarMessage=orderStatusService.findCarByOrderStatus(idCar);
-        return ResponseEntity.status(getHttpStatusFromResponseCode(jsonFullCarMessage.getResponse().getStrCode())).body(jsonFullCarMessage);
+        return ResponseEntity.status(getHttpStatusFromResponseCode(jsonFullCarMessage.getResponse().getStrCode())).body(jsonFullCarMessage.getMessage().getCar());
     }
 
     private HttpStatus getHttpStatusFromResponseCode(String responseCode){

@@ -18,15 +18,7 @@ public enum ApplicationMessage {
 
   UNAVAILABLE(2, "Unavailable", "02"),
 
-  GENERIC_ERROR(3, "Generic Error", "03"),
-
-  INVALID_OPERATION(4, "Invalidate Operation", "04"),
-
-  TRANSACTION_NOT_FOUND(5, "Transaction Not found", "05"),
-
   BAD_FORMAT(6, "Bad Format", "06"),
-
-  INVALID_DATE(7, "Invalidate date", "07"),
 
   TIMEOUT(99, "Timeout error", "99"),
 

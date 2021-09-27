@@ -24,14 +24,15 @@ public class OrderStatusService {
 
     public JsonFullCarMessage findCarByOrderStatus(Long idCar) throws JsonProcessingException {
         OrderStatusRestConnector orderStatusRestConnector = orderStatusRestService.getOrderStatus(idCar);
-        OrderStatus orderStatus = orderStatusRestConnector.checkOrderStatus(idCar);
+
         return ofNullable(carRepository.findById(idCar)).map(car->{
+            OrderStatus orderStatus = orderStatusRestConnector.checkOrderStatus(idCar);
                     if(nonNull(orderStatus)){
                         OrderStatus orderStatusModificate = OrderStatus.builder().assignedTo(orderStatus.getAssignedTo()).stage(orderStatus.getStage()).lastUpdate(LocalDateTimeUtil.getFormatTime(orderStatus.getLastUpdate())).build();
                         return JsonFullCarMessage.builder().message(Message.builder()
-                                .car(car).orderStatus(orderStatusModificate).build()).response(Response.builder().code(ApplicationMessage.CREATED.getCode())
-                                .message(ApplicationMessage.CREATED.getMessage()).strCode(ApplicationMessage.CREATED.getStrCode())
-                                .sourceService("OrderStatusService").build()).build();
+                                .car(car).orderStatus(orderStatusModificate).build()).response(Response.builder().code(ApplicationMessage.SUCCESS.getCode())
+                                .message(ApplicationMessage.SUCCESS.getMessage()).strCode(ApplicationMessage.SUCCESS.getStrCode())
+                                .build()).build();
                     }
                     return this.getBadResponse();
                 })

@@ -1,5 +1,7 @@
 package com.ing.interview.api.rest;
 
+import com.ing.interview.api.rest.connectors.OrderStatusRestConnector;
+import com.ing.interview.domain.dto.Car;
 import com.ing.interview.domain.service.OrderStatusService;
 import com.ing.interview.enums.ApplicationMessage;
 import com.ing.interview.objects.CarCommand;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import wiremock.com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -34,21 +37,20 @@ class OrderStatusControllerTest {
     @Test
     void givenCarOnlyIfExistsOrderStatusThenReturnIsSuccessfully() throws Exception {
         CarCommand carCommand = new CarCommand(50, "BLACK", "MERCEDES");
-        JsonFullCarMessage jsonFullCarMessageExpected = JsonFullCarMessageMother.getMessageCarAvailableResponse(carCommand, 33L, false);
+        OrderStatusRestConnector orderStatusRestConnector = new OrderStatusRestConnector();
+        JsonFullCarMessage jsonFullCarMessageExpected = JsonFullCarMessageMother.getMessageCarAvailableResponse(carCommand, 33L,orderStatusRestConnector.checkOrderStatus(33L), false);
 
         when(orderStatusService.findCarByOrderStatus(any())).thenReturn(jsonFullCarMessageExpected);
 
         OrderStatusController orderStatusController = new OrderStatusController(orderStatusService);
 
-        ResponseEntity<JsonFullCarMessage> jsonOutput = orderStatusController.findCarByOrderStatus(33L);
+        ResponseEntity<Car> jsonOutput = orderStatusController.findCarByOrderStatus(33L);
 
         verify(orderStatusService).findCarByOrderStatus(any());
 
-        assertEquals(ApplicationMessage.SUCCESS.getCode(), Objects.requireNonNull(jsonOutput.getBody()).getResponse().getCode());
-        assertEquals(ApplicationMessage.SUCCESS.getMessage(), jsonOutput.getBody().getResponse().getMessage());
-        assertEquals(ApplicationMessage.SUCCESS.getStrCode(), jsonOutput.getBody().getResponse().getStrCode());
+        assertEquals(HttpStatus.OK, Objects.requireNonNull(jsonOutput.getStatusCode()));
 
-        assertEquals(objectMapper.writeValueAsString(jsonFullCarMessageExpected),
-                objectMapper.writeValueAsString(jsonOutput.getBody()));
+        assertEquals(jsonFullCarMessageExpected.getMessage().getCar(),
+                jsonOutput.getBody());
     }
 }

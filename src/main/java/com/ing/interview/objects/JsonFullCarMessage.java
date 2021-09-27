@@ -14,7 +14,6 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @Getter
-@Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class JsonFullCarMessage implements Serializable {
     private static final long serialVersionUID = 1554669223822615716L;
@@ -27,9 +26,7 @@ public class JsonFullCarMessage implements Serializable {
     @NotNull
     private Message message;
 
-    @NoArgsConstructor
     @Getter
-    @Setter
     @AllArgsConstructor
     @Builder
     public static class Response implements Serializable {
@@ -46,9 +43,7 @@ public class JsonFullCarMessage implements Serializable {
         private String sourceService;
     }
 
-    @NoArgsConstructor
     @Getter
-    @Setter
     @AllArgsConstructor
     @Builder
     public static class Message implements Serializable {
