@@ -1,5 +1,6 @@
 package com.ing.interview.api.rest;
 
+import com.ing.interview.domain.dto.Car;
 import com.ing.interview.domain.service.CarService;
 import com.ing.interview.enums.ApplicationMessage;
 import com.ing.interview.objects.CarCommand;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import wiremock.com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -34,21 +36,18 @@ class CarControllerTest {
     @Test
     void givenCarOnlyIfExistsAndFindColorAndHaveAllowedA_ThenCreateThenReturnIsCreated() throws Exception {
         CarCommand carCommand = new CarCommand(50, "BLACK", "MERCEDES");
-        JsonFullCarMessage jsonFullCarMessageExpected = JsonFullCarMessageMother.getMessageCarAvailableResponse(carCommand, 0L, true);
+        JsonFullCarMessage jsonFullCarMessageExpected = JsonFullCarMessageMother.getMessageCarAvailableResponse(carCommand, 0L, null,true);
 
         when(carService.createCarExtended(any())).thenReturn(jsonFullCarMessageExpected);
 
         CarController carController = new CarController(carService);
 
-        ResponseEntity<JsonFullCarMessage> jsonOutput = carController.createCarExtended(carCommand);
+        ResponseEntity<Car> jsonOutput = carController.createCarExtended(carCommand);
 
         verify(carService).createCarExtended(any());
 
-        assertEquals(ApplicationMessage.CREATED.getCode(), Objects.requireNonNull(jsonOutput.getBody()).getResponse().getCode());
-        assertEquals(ApplicationMessage.CREATED.getMessage(), jsonOutput.getBody().getResponse().getMessage());
-        assertEquals(ApplicationMessage.CREATED.getStrCode(), jsonOutput.getBody().getResponse().getStrCode());
+        assertEquals(HttpStatus.CREATED, jsonOutput.getStatusCode());
 
-        assertEquals(objectMapper.writeValueAsString(jsonFullCarMessageExpected),
-                objectMapper.writeValueAsString(jsonOutput.getBody()));
+        assertEquals(jsonFullCarMessageExpected.getMessage().getCar(), jsonOutput.getBody());
     }
 }

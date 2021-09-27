@@ -1,6 +1,7 @@
 package com.ing.interview.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.hateoas.client.LinkDiscoverer;
 import org.springframework.hateoas.client.LinkDiscoverers;
 import org.springframework.hateoas.mediatype.collectionjson.CollectionJsonLinkDiscoverer;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@EnableWebMvc
+@Configuration
 @EnableSwagger2
 public class SwaggerConfig {
 
@@ -27,52 +28,27 @@ public class SwaggerConfig {
         List<LinkDiscoverer> plugins = new ArrayList<>();
         plugins.add(new CollectionJsonLinkDiscoverer());
         return new LinkDiscoverers(SimplePluginRegistry.of(plugins));
-
     }
 
     @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2).select()
+    public Docket apiDocket() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("api-cars")
+                .select()
                 .apis(RequestHandlerSelectors.basePackage("com.ing.interview.api.rest"))
-                .paths(PathSelectors.any())
+                .paths(PathSelectors.regex("/com.ing.interview.api.rest.*"))
                 .build()
                 .apiInfo(getApiInfo())
                 ;
-
     }
 
-
-    /*@Bean
-    public Docket carApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("api-cars")
-                .apiInfo(apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.regex("/com.ing.interview.api.rest.*"))
-                .build();
-    }*/
-
-    /*private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("Vehicle Test API Rest")
-                .description("API RESTful for the interview ing car.")
-                .termsOfServiceUrl("http://en.wikipedia.org/wiki/Terms_of_service")
-                .contact(new Contact("Susana Galán", "http://car.com", "susanagalanga30@gmail.com"))
-                .license("Apache License Version 2.0")
-                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
-                .version("2.0")
-                .build();
-    }*/
-
-
-   private ApiInfo getApiInfo() {
+    private ApiInfo getApiInfo() {
         return new ApiInfo(
-                "Order Service API",
+                "Order Service API vehicle test",
                 "Order Service API Description",
                 "1.0",
-                "http://localhost:8080/cars/api/v1",
-                new Contact("Cars", "https://cars.com", "apis@cars.com"),
+                "http://ing.com/terms",
+                new Contact("ING", "https://ing.com", "susanagalanga30@gmail.com"),
                 "LICENSE",
                 "LICENSE URL",
                 Collections.emptyList()
