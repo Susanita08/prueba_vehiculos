@@ -11,7 +11,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,12 +22,10 @@ import java.util.Map;
 
 import static com.ing.interview.utils.ConstantsUtils.*;
 import static java.util.Optional.ofNullable;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(PATH_SEPARATOR + CARS + PATH_SEPARATOR + API + PATH_SEPARATOR + API_VERSION)
-@Api(value = "/vehicle test")
+@Api(value = "/api-cars")
 public class CarController {
     private static final Log log = LogFactory.getLog(CarController.class);
 
@@ -52,6 +49,7 @@ public class CarController {
             @ApiResponse(code = 400, message = "Some microservice did not respond"),
             @ApiResponse(code = 500, message = "CardAvailabilityService not availability for the model specific")
     })
+
     @PostMapping(path = PATH_SEPARATOR + CREATE_CAR, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Car> createCarExtended(@Valid @RequestBody CarCommand carCommand) {
         log.info("Create car extended");

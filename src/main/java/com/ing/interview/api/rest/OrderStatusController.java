@@ -9,6 +9,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+/*import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;*/
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
@@ -24,11 +28,11 @@ import static java.util.Optional.ofNullable;
 
 @RestController
 @RequestMapping(PATH_SEPARATOR + ORDERS + PATH_SEPARATOR + API + PATH_SEPARATOR + API_VERSION)
-@Api(value = "/vehicle test")
+@Api(value = "/api-cars")
 public class OrderStatusController {
 
     private static final Log log = LogFactory.getLog(OrderStatusController.class);
-    private final static Map<String, HttpStatus> STATUS_MAP = new HashMap<>();
+    private static final Map<String, HttpStatus> STATUS_MAP = new HashMap<>();
 
     static {
         STATUS_MAP.put(ApplicationMessage.UNEXPECTED.getStrCode(), HttpStatus.BAD_REQUEST);

@@ -6,7 +6,6 @@ import org.springframework.hateoas.client.LinkDiscoverer;
 import org.springframework.hateoas.client.LinkDiscoverers;
 import org.springframework.hateoas.mediatype.collectionjson.CollectionJsonLinkDiscoverer;
 import org.springframework.plugin.core.SimplePluginRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -27,7 +26,7 @@ public class SwaggerConfig {
     public LinkDiscoverers discoverers() {
         List<LinkDiscoverer> plugins = new ArrayList<>();
         plugins.add(new CollectionJsonLinkDiscoverer());
-        return new LinkDiscoverers(SimplePluginRegistry.of(plugins));
+        return new LinkDiscoverers(SimplePluginRegistry.create(plugins));
     }
 
     @Bean
@@ -36,7 +35,7 @@ public class SwaggerConfig {
                 .groupName("api-cars")
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.ing.interview.api.rest"))
-                .paths(PathSelectors.regex("/com.ing.interview.api.rest.*"))
+                .paths(PathSelectors.any())
                 .build()
                 .apiInfo(getApiInfo())
                 ;
