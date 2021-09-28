@@ -22,6 +22,8 @@ import java.util.Map;
 
 import static com.ing.interview.utils.ConstantsUtils.*;
 import static java.util.Optional.ofNullable;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(PATH_SEPARATOR + CARS + PATH_SEPARATOR + API + PATH_SEPARATOR + API_VERSION)
@@ -54,6 +56,7 @@ public class CarController {
     public ResponseEntity<Car> createCarExtended(@Valid @RequestBody CarCommand carCommand) {
         log.info("Create car extended");
         JsonFullCarMessage jsonFullCarMessage=carService.createCarExtended(carCommand);
+        jsonFullCarMessage.getMessage().getCar().add(linkTo(methodOn(CarController.class).createCarExtended(carCommand)).withSelfRel());
         return ResponseEntity.status(getHttpStatusFromResponseCode(jsonFullCarMessage.getResponse().getStrCode())).body(jsonFullCarMessage.getMessage().getCar());
        }
 
