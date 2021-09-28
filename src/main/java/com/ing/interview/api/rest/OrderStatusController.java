@@ -21,10 +21,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.ing.interview.utils.ConstantsUtils.*;
 import static java.util.Optional.ofNullable;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(PATH_SEPARATOR + ORDERS + PATH_SEPARATOR + API + PATH_SEPARATOR + API_VERSION)
@@ -51,12 +54,17 @@ public class OrderStatusController {
     public ResponseEntity<Car> findCarByOrderStatus(@PathVariable Long idCar) throws JsonProcessingException {
         log.info("Find Car by orderStatus in the system");
         JsonFullCarMessage jsonFullCarMessage=orderStatusService.findCarByOrderStatus(idCar);
+        addSelfLink(jsonFullCarMessage.getMessage().getCar());
         return ResponseEntity.status(getHttpStatusFromResponseCode(jsonFullCarMessage.getResponse().getStrCode())).body(jsonFullCarMessage.getMessage().getCar());
     }
 
     private HttpStatus getHttpStatusFromResponseCode(String responseCode){
         log.info("Get HttpStatus of response in OrderStatusController: "+responseCode);
         return ofNullable(STATUS_MAP.get(responseCode)).orElse(HttpStatus.OK);
+    }
+
+    private void addSelfLink(Car car) throws JsonProcessingException {
+        car.add(linkTo(methodOn(OrderStatusController.class).findCarByOrderStatus(car.getId())).withSelfRel());
     }
 
 }
