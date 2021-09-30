@@ -33,4 +33,7 @@ public class ConstantsUtils {
     /*Definitions order conector service*/
     public static final String ING_ORDER_CONECTOR_SERVICE = "orderConectorService";
     public static final String ING_ORDER_CONECTOR_SERVICE_PATH_TIMEOUT = "Timeout";
+
+    /*Message Default Validator*/
+    public static final String MESSAGE_DEFAULT_VALIDATOR = "The applicant is not of the age allowed for the model to be insured";
 }
