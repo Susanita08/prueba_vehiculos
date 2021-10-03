@@ -24,7 +24,7 @@
         <swagger.version>2.9.2</swagger.version>
         <flyway.user>admin</flyway.user>
         <flyway.password>admin123</flyway.password>
-        <flyway.schemas>interview_cars</flyway.schemas>
+        <flyway.schemas>interview</flyway.schemas>
         <flyway.placeholders.location>classpath:bd/migration</flyway.placeholders.location>
     </properties>
 
