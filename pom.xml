@@ -131,11 +131,11 @@
                 <version>8.0.0-beta1</version>
 
                 <configuration>
-                    <url>jdbc:h2:file:~/interview_cars</url>
+                    <url>jdbc:h2:file:~/interview</url>
                     <user>admin</user>
                     <password>admin123</password>
                     <schemas>
-                        <schema>interview_cars</schema>
+                        <schema>interview</schema>
                     </schemas>
                 </configuration>
                 <dependencies>
