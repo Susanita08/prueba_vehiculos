@@ -40,24 +40,6 @@ class OrderStatusControllerIntegrationTest {
     @MockBean
     private OrderStatusRestService orderRestService;
 
-    /** El server http que servirá para hacer un mock del servicio real */
-    private Server httpServer;
-    private static final int PUERTO_HTTP = 3211;
-
-
-    @BeforeEach
-    public void setUp() throws Exception {
-        //iniciamos el servidor mock
-        httpServer = new Server(PUERTO_HTTP);
-        httpServer.start();
-
-    }
-
-    @AfterEach
-    public void tearDown() throws Exception {
-        httpServer.stop();
-    }
-
     public static Stream<Arguments> orderStatusEvenAndOdd() {
         return Stream.of(Arguments.of(546L, OrderStatus.builder().assignedTo("Sergi").stage("processing").lastUpdate(LocalDateTimeUtil.getFormatTime(LocalDateTime.now())).build()),
                 Arguments.of(225L, OrderStatus.builder().assignedTo("Tomas").lastUpdate(LocalDateTimeUtil.getFormatTime(LocalDateTime.now())).stage("pending").build()));

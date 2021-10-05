@@ -49,25 +49,6 @@ class CarControllerIntegrationTest {
     @MockBean
     private InsuranceService insuranceService;
 
-    /** El server http que servirá para hacer un mock del servicio real */
-    private Server httpServer;
-    private static final int PUERTO_HTTP = 3210;
-    private static final String URL_SERVICIO = "http://localhost:" + PUERTO_HTTP;
-
-
-    @Before
-    public void setUp() throws Exception {
-        //iniciamos el servidor mock
-        httpServer = new Server(PUERTO_HTTP);
-        httpServer.start();
-
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        httpServer.stop();
-    }
-
     @Test
     void givenCarWhenCreateCarExtended() throws Exception {
         JSONObject car = new JSONObject();

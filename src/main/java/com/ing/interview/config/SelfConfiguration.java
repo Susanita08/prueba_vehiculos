@@ -20,7 +20,6 @@ public class SelfConfiguration {
     private Integer internalTimeout;
 
     @Bean
-
     @Primary
     public WebClient webClient() {
         HttpClient httpClient = HttpClient.create().option(ChannelOption.CONNECT_TIMEOUT_MILLIS, getInternalTimeout());
